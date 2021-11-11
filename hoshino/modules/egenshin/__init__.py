@@ -1,6 +1,6 @@
 from . import util
 from .material import *
-from hoshino import Service  # 如果使用hoshino的分群管理取消注释这行
+from hoshino import Service, R  # 如果使用hoshino的分群管理取消注释这行
 
 #
 sv = Service('egenshin')  # 如果使用hoshino的分群管理取消注释这行

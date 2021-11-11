@@ -1,7 +1,7 @@
 from datetime import timedelta
 from bs4 import BeautifulSoup
 from hoshino import Service, priv, MessageSegment
-from ..util import filter_list, get_next_day, cache
+from ..util import filter_list, get_next_day, cache, support_private
 from .utils.gacha_info import gacha_info_list, gacha_info
 from .modules.wish import wish, gacha_type_by_name
 from .modules.wish_ui import wish_ui

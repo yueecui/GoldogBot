@@ -57,3 +57,7 @@ async def ocr_text(img_path=None, img_url=None):
         raise Exception(json_data.error_msg)
 
     return json_data
+
+
+z = ocr_text(r'E:\Temp\test.png')
+x = 1
