@@ -1,10 +1,4 @@
-﻿import json
-import os
-import random
-
-import hoshino
-
-from hoshino import Service, priv
+﻿from hoshino import Service, priv
 from hoshino.typing import CQEvent
 from hoshino import aiorequests
 
@@ -32,20 +26,21 @@ async def guess(text: str):
     response.raise_for_status()
     result = await response.json()
     if type(result) == list and len(result) > 0:
-        answer = [f'“{result[0]["name"]}”']
+        answer = [f'“{text}”']
         not_first = False
-        if 'trans' in result[0]:
+        if 'trans' in result[0] and len(result[0]['trans']) > 0:
             answer.append(f'经常是：' + '、'.join(result[0]['trans']))
             not_first = True
-        if 'inputting' in result[0]:
+        if 'inputting' in result[0] and len(result[0]['inputting']) > 0:
             answer.append(f'{not_first and "，也" or ""}可能是：' + '、'.join(result[0]['inputting']))
-        return ''.join(answer)
-
-    else:
-        return f'没有找到“{result[0]}”的含义'
+            not_first = True
+        if not_first:
+            return ''.join(answer)
+    return f'没有找到“{text}”的含义'
 
 
 @sv.on_suffix("是什么意思？")
+@sv.on_suffix("是什么意思?")
 async def nbnhhsh(bot, ev: CQEvent):
     msg = ev.message.extract_plain_text().strip()
     result = await guess(msg)
