@@ -40,8 +40,8 @@ def get_answers():
     return words[key]["answer"]
 
 
-@sv.on_suffix(("翻看答案"))
-@sv.on_prefix(("翻看答案"))
+@sv.on_suffix("翻看答案")
+@sv.on_prefix("翻看答案")
 async def answersbook(bot, ev: CQEvent):
     msg = ev.message.extract_plain_text().strip()
     if not msg:

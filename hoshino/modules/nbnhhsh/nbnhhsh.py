@@ -6,7 +6,7 @@ import hoshino
 
 from hoshino import Service, priv
 from hoshino.typing import CQEvent
-
+from hoshino import aiorequests
 
 sv_help = """
 [<xxx>是什么意思？] 查询“能不能好好说话”释义网络缩写
@@ -26,11 +26,28 @@ guess_api_url = "https://lab.magiconch.com/api/nbnhhsh/guess"
 
 
 async def guess(text: str):
+    if text == '':
+        return ''
+    response = await aiorequests.post(guess_api_url, json={"text": text})
+    response.raise_for_status()
+    result = await response.json()
+    if type(result) == list and len(result) > 0:
+        answer = [f'“{result[0]["name"]}”']
+        not_first = False
+        if 'trans' in result[0]:
+            answer.append(f'经常是：' + '、'.join(result[0]['trans']))
+            not_first = True
+        if 'inputting' in result[0]:
+            answer.append(f'{not_first and "，也" or ""}可能是：' + '、'.join(result[0]['inputting']))
+        return ''.join(answer)
 
-    z = 1
+    else:
+        return f'没有找到“{result[0]}”的含义'
 
 
-@sv.on_prefix("是什么意思？")
+@sv.on_suffix("是什么意思？")
 async def nbnhhsh(bot, ev: CQEvent):
     msg = ev.message.extract_plain_text().strip()
-    z = 1
+    result = await guess(msg)
+    await bot.send(ev, result, at_sender=True)
+
