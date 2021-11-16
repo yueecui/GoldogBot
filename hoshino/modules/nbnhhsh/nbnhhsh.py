@@ -44,5 +44,6 @@ async def guess(text: str):
 async def nbnhhsh(bot, ev: CQEvent):
     msg = ev.message.extract_plain_text().strip()
     result = await guess(msg)
-    await bot.send(ev, result, at_sender=True)
+    if result != '':
+        await bot.send(ev, result, at_sender=True)
 
