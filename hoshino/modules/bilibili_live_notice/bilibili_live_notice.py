@@ -52,7 +52,7 @@ async def update_live_status(live: dict):
         sv.logger.error(f'更新时，{live["room_id"]}直播间数据获取失败')
         return False
     latest_time = room_info['live_time']
-    if live['latest_time'] != latest_time:
+    if latest_time != "0000-00-00 00:00:00" and live['latest_time'] != latest_time:
         live['latest_time'] = latest_time
         global _subscribes
         _subscribes[live['room_id']]['latest_time'] = latest_time
