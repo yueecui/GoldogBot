@@ -1,7 +1,7 @@
 from datetime import timedelta
 from bs4 import BeautifulSoup
 from hoshino import Service, priv, MessageSegment
-from ..util import filter_list, get_next_day, cache, support_private
+from ..util import filter_list, get_next_day, cache
 from .utils.gacha_info import gacha_info_list, gacha_info
 from .modules.wish import wish, gacha_type_by_name
 from .modules.wish_ui import wish_ui
@@ -53,6 +53,8 @@ async def gacha(bot, ev):
 
 async def handle_msg(bot, ev):
     msg = ev.message.extract_plain_text().strip() or '限定'
+    if msg == '2':
+        msg = '限定2'
     gacha_type = gacha_type_by_name(msg)
     if not gacha_type:
         await bot.finish(ev, '不存在此卡池: %s' % msg)
