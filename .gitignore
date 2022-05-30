@@ -136,3 +136,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+.idea/
+hoshino/modules/egenshin/
+hoshino/modules/Genshin_Impact_bot/
